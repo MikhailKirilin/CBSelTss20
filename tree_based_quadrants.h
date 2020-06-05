@@ -36,6 +36,18 @@ int                 child_id (const quadrant_t * q);
 void                child (const quadrant_t * q, quadrant_t * child_quadrant,
                            int child_id);
 
+/** Compute the parent of a quadrant.
+ * \param [in]  q Input quadrant.
+ * \param [in,out] parent_quadrant
+ *                   Existing quadrant whose Morton index will be filled
+ *                   with the Morton index of the parent of \a q.
+ *                   Its user_data will be untouched.
+ * \note \a q may point to the same quadrant as \a parent_quadrant.
+         The user_data of \a parent_quadrant is never modified.
+ */
+void                parent (const quadrant_t * q,
+                            quadrant_t * parent_quadrant);
+
 /** Write in the quadrant \a q the coordinates of the root quadrants.
  * \param [out]  q      Quadrant that coordinates will be set to coordinates.
  */
