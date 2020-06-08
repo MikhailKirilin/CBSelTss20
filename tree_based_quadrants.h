@@ -61,7 +61,8 @@ int                parent (const quadrant_t * q,
                             quadrant_t * parent_quadrant);
 
 /** Write in the quadrant \a q the coordinates of the root quadrants.
- * \param [out]  q      Quadrant that coordinates will be set to coordinates.
+ * \param [out]  q      Quadrant that coordinates will be set to coordinates
+ *                      and level of the root quadrant.
  */
 void                root (quadrant_t * q);
 
