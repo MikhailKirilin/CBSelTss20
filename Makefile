@@ -7,3 +7,6 @@ C_PROGRAM = test_program
 
 $(C_PROGRAM): $(C_OBJS)
 	gcc $^ -o $@
+	
+clean :
+	-rm *.o $(objects) test_program
