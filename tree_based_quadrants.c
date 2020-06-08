@@ -21,7 +21,7 @@ child_id (const quadrant_t * q)
   return res;
 }
 
-void
+int
 child (const quadrant_t * q, quadrant_t * child_quadrant, int child_id)
 {
   child_quadrant->level = q->level + 1;
@@ -32,14 +32,16 @@ child (const quadrant_t * q, quadrant_t * child_quadrant, int child_id)
     q->y + (child_id & 2 ? QUADRANT_LEN (child_quadrant->level) : 0);
   child_quadrant->z =
     q->z + (child_id & 4 ? QUADRANT_LEN (child_quadrant->level) : 0);
+
+  return 0;
 }
 
-void
+int
 parent (const quadrant_t * q, quadrant_t * parent_quadrant)
 {
   if (q->level == 0) {
     printf ("The root has no parent quadrant");
-    return;
+    return -1;
   }
   // level of the parent decreases by 1
   parent_quadrant->level = q->level - 1;
@@ -50,7 +52,7 @@ parent (const quadrant_t * q, quadrant_t * parent_quadrant)
   parent_quadrant->y = q->y & ~h;
   parent_quadrant->z = q->z & ~h;
 
-  return;
+  return 0;
 }
 
 void
@@ -60,19 +62,19 @@ root (quadrant_t * q)
   q->x = q->y = q->z = 0;
 }
 
-void
+int
 sibling (const quadrant_t * q, quadrant_t * sibling_quadrant, int sibling_id)
 {
 
   if (!is_valid (q)) {
     printf ("sibling: the input quadrant has to be valid.\n");
-    return;
+    return -1;
   }
 
   if (sibling_id < 0 || sibling_id > 7) {
     printf ("sibling: sibling_id should lie between 0 (included) \
         and 7 (included).\n");
-    return;
+    return -1;
   }
 
   sibling_quadrant->level = q->level;
@@ -82,21 +84,23 @@ sibling (const quadrant_t * q, quadrant_t * sibling_quadrant, int sibling_id)
   sibling_quadrant->x = (sibling_id & 1) ? (q->x | h) : (q->x & ~h);
   sibling_quadrant->y = (sibling_id & 2) ? (q->y | h) : (q->y & ~h);
   sibling_quadrant->z = (sibling_id & 4) ? (q->z | h) : (q->z & ~h);
+
+  return 0;
 }
 
-void
+int
 ancestor (const quadrant_t * q, int level,quadrant_t * ancestor_quadrant)
 {
   qcoord_t        mask;
 
   if (!is_valid (q)) {
     printf ("ancestor: the input quadrant has to be valid.\n");
-    return;
+    return -1;
   }
 
   if((int) q->level < level || level < 0) {
     printf("ancestor: level should be between 0 and quadrant level");
-    return;
+    return -1;
   }
   mask = ~(QUADRANT_LEN(level) - 1);
 
@@ -104,10 +108,12 @@ ancestor (const quadrant_t * q, int level,quadrant_t * ancestor_quadrant)
   ancestor_quadrant->x = q->x & mask;
   ancestor_quadrant->y = q->y & mask;
   ancestor_quadrant->z = q->z & mask;
+
+  return 0;
 }
 
 int
-is_ancestor (const quadrant_t * q, quadrant_t * r)
+is_ancestor (const quadrant_t * q, const quadrant_t * r)
 {
   qcoord_t          mask;
 
@@ -122,21 +128,21 @@ is_ancestor (const quadrant_t * q, quadrant_t * r)
                                 && !((q->z ^ r->z) & mask);
 }
 
-void
+int
 first_descendant (const quadrant_t * q, quadrant_t * first_descendant,
                   int level)
 {
 
   if (!is_valid (q)) {
     printf ("first_descendant: the input quadrant has to be valid.\n");
-    return;
+    return -1;
   }
 
   if ((int) q->level > level || level >= MAXLEVEL) {
     printf
       ("first_descendant: level should lie between quadrant level (included) \
         and MAXLEVEL (excluded).\n");
-    return;
+    return -1;
   }
 
   first_descendant->x = q->x;
@@ -144,9 +150,11 @@ first_descendant (const quadrant_t * q, quadrant_t * first_descendant,
   first_descendant->z = q->z;
 
   first_descendant->level = (int8_t) level;
+
+  return 0;
 }
 
-void
+int
 last_descendant (const quadrant_t * q, quadrant_t * last_descendant,
                  int level)
 {
@@ -154,14 +162,14 @@ last_descendant (const quadrant_t * q, quadrant_t * last_descendant,
 
   if (!is_valid (q)) {
     printf ("last_descendant: the input quadrant has to be valid.\n");
-    return;
+    return -1;
   }
 
   if ((int) q->level > level || level >= MAXLEVEL) {
     printf
       ("last_descendant: level should lie between quadrant level (included) \
         and MAXLEVEL (excluded).\n");
-    return;
+    return -1;
   }
 
   shift = QUADRANT_LEN (q->level) - QUADRANT_LEN (level);
@@ -171,4 +179,6 @@ last_descendant (const quadrant_t * q, quadrant_t * last_descendant,
   last_descendant->z = q->z + shift;
 
   last_descendant->level = (int8_t) level;
+
+  return 0;
 }
