@@ -35,6 +35,8 @@ quadrant_t;
  */
 int                 is_valid (const quadrant_t * q);
 
+int                 is_equal (const quadrant_t * q, const quadrant_t * r);
+
 /** Compute the position of this child within its siblings.
  * \return Returns its child id in 0..d
  */
@@ -47,8 +49,10 @@ int                 child_id (const quadrant_t * q);
  *                 with the coordinates of its child no. \b child_id.
  * \param [in]     child_id The id of the child computed, 0..d.
  */
-int                child (const quadrant_t * q, quadrant_t * child_quadrant,
+int                 child (const quadrant_t * q, quadrant_t * child_quadrant,
                            int child_id);
+
+int                 is_child (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the parent of a quadrant.
  * \param [in]  q Input quadrant.
@@ -57,8 +61,10 @@ int                child (const quadrant_t * q, quadrant_t * child_quadrant,
  *                   with the Morton index of the parent of \a q.
  * \note \a q may point to the same quadrant as \a parent_quadrant.
  */
-int                parent (const quadrant_t * q,
+int                 parent (const quadrant_t * q,
                             quadrant_t * parent_quadrant);
+
+int                 is_parent (const quadrant_t * q, const quadrant_t * r);
 
 /** Write in the quadrant \a q the coordinates of the root quadrants.
  * \param [out]  q      Quadrant that coordinates will be set to coordinates
@@ -73,8 +79,10 @@ void                root (quadrant_t * q);
  *                    with the coordinates of sibling no. sibling_id of q.
  * \param [in]     sibling_id The id of the sibling computed, 0..d.
  */
-int                sibling (const quadrant_t * q,
+int                 sibling (const quadrant_t * q,
                              quadrant_t * sibling_quadrant, int sibling_id);
+
+int                 is_sibling (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the ancestor of a quadrant at a given level.
  * \param [in]  q       Input quadrant.
@@ -84,7 +92,7 @@ int                sibling (const quadrant_t * q,
  *                      with the ancestor of q at the given level.
  * \note The quadrant q may point to the same quadrant as ancestor_quadrant.
  */
-int                ancestor (const quadrant_t * q, int level,
+int                 ancestor (const quadrant_t * q, int level,
                               quadrant_t * ancestor_quadrant);
 
 /** Test if a quadrant is an ancestor of another quadrant.
@@ -100,7 +108,7 @@ int                 is_ancestor (const quadrant_t * q, const quadrant_t * r);
  *                     First descendant of \a q on level \a level.
  * \param [in]  level  Level must be greater equal than q's level.
  */
-int                first_descendant (const quadrant_t * q,
+int                 first_descendant (const quadrant_t * q,
                                       quadrant_t * first_descendant,
                                       int level);
 
@@ -112,7 +120,7 @@ int                first_descendant (const quadrant_t * q,
  *                                or level is not in [q->level, MAXLEVEL),            
  *                              0 if all preconditions are satisfied.
  */
-int                last_descendant (const quadrant_t * q,
+int                 last_descendant (const quadrant_t * q,
                                      quadrant_t * ld, int level);
 
 #endif /* !TREE_BASED_QUADRANTS_H */
