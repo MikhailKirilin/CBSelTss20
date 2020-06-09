@@ -10,3 +10,9 @@ $(C_PROGRAM): $(C_OBJS)
 	
 clean :
 	-rm $(C_OBJS) $(C_PROGRAM)
+
+doxygen : Doxyfile
+	doxygen
+
+clean-doc :
+	rm -rf doxygen
