@@ -55,6 +55,26 @@ parent (const quadrant_t * q, quadrant_t * parent_quadrant)
   return 0;
 }
 
+int
+is_parent (const quadrant_t * q, const quadrant_t * r)
+{
+  if (!is_valid (q) || !is_valid (r)) {
+    printf ("is_parent: the input quadrants have to be valid.\n");
+    return -1;
+  }
+
+  if( q->level >= MAXLEVEL) {
+    printf("is_parent: level of first input has to be less then MAXLEVEL.\n");
+    return -1;
+  }
+
+  quadrant_t * parent_r;
+  // compute the parent of r
+  parent( r, parent_r);
+  // return true if q is the parent of p
+  return is_equal( parent_r, q );
+}
+
 void
 root (quadrant_t * q)
 {
