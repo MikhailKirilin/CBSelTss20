@@ -44,8 +44,8 @@ parent (const quadrant_t * q, quadrant_t * parent_quadrant)
     return -1;
   }
   
-  if (q->level == 0) {
-    printf ("The root has no parent quadrant");
+  if (q->level <= 0) {
+    printf ("The root has no parent quadrant.\n");
     return -1;
   }
   // level of the parent decreases by 1
