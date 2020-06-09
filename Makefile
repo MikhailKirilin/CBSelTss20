@@ -9,4 +9,4 @@ $(C_PROGRAM): $(C_OBJS)
 	gcc $^ -o $@
 	
 clean :
-	-rm *.o $(objects) test_program
+	-rm $(C_OBJS) $(C_PROGRAM)
