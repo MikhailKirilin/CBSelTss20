@@ -21,19 +21,32 @@ child_id (const quadrant_t * q)
   return res;
 }
 
-int
-child (const quadrant_t * q, quadrant_t * child_quadrant, int child_id)
+int child (const quadrant_t * q, quadrant_t * child_quadrant,
+                           int child_id)
 {
-  child_quadrant->level = q->level + 1;
+    if (!is_valid(q))
+    {
+        printf("child: The input quadrant q is not valid.\n", );
+        return -1;
+    }
+    if (child_id<0 || child_id > 7)
+    {
+        printf("child: The child_id %i is not valid \
+        (needs to be between 0 (included) and 7 (included)).\n", child_id);
+        return -1;
+    }
 
-  child_quadrant->x =
-    q->x + (child_id & 1 ? QUADRANT_LEN (child_quadrant->level) : 0);
-  child_quadrant->y =
-    q->y + (child_id & 2 ? QUADRANT_LEN (child_quadrant->level) : 0);
-  child_quadrant->z =
-    q->z + (child_id & 4 ? QUADRANT_LEN (child_quadrant->level) : 0);
+    child_quadrant->level = q->level + 1;
 
-  return 0;
+    int shift = QUADRANT_LEN(child_quadrant->level);
+
+    child_quadrant->x = q->x + (child_id & 1 ? shift : 0);
+
+    child_quadrant->y = q->y + (child_id & 2 ? shift : 0);
+
+    child_quadrant->z = q->z + (child_id & 4 ? shift : 0);
+
+    return 0;
 }
 
 int
