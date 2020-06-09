@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
+/** The finest level of the quadtree for representing quadrants */
 #define MAXLEVEL 19
 
 /** The length of a quadrant of level l */
