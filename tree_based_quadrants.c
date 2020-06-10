@@ -26,7 +26,7 @@ int child (const quadrant_t * q, quadrant_t * child_quadrant,
 {
     if (!is_valid(q))
     {
-        printf("child: The input quadrant q is not valid.\n", );
+        printf("child: The input quadrant q is not valid.\n");
         return -1;
     }
     if (child_id<0 || child_id > 7)
