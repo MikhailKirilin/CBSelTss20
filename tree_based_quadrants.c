@@ -10,15 +10,33 @@ is_valid (const quadrant_t * q)
     ((q->z & (QUADRANT_LEN (q->level) - 1)) == 0);
 }
 
-int
-child_id (const quadrant_t * q)
+int 
+child_id (const quadrant_t *q) 
 {
-  int                 res = 0;
-  res += (q->x & QUADRANT_LEN (q->level) ? 1 : 0);
-  res += ((q->y & QUADRANT_LEN (q->level) ? 1 : 0) << 1);
-  res += ((q->z & QUADRANT_LEN (q->level) ? 1 : 0) << 2);
-
-  return res;
+	if(is_valid(q)) {
+		// length of the quadrant at level q->level
+		int h = QUADRANT_LEN(q->level);
+		// return variable
+		int res = 0;
+		
+		// Check wheter the coordinates of q are even or odd multiples of the quadrant_length 
+		// and add up the corresponding powers of 2
+		res += (q->x & h ? 1 : 0);
+		res += ((q->y & h ? 1 : 0) << 1);
+		res += ((q->z & h ? 1 : 0) << 2);
+		
+		// Check whether the return value is valid
+		if (res >= 0 && res <= 7)
+			return res;
+		else {
+			printf ("child_id: the return value does not lie between (inclusive) 0 and 7.\n");
+			return -1;
+		}
+	}
+	else {
+		printf ("child_id: the input quadrant has to be valid.\n");
+		return -1;
+	}
 }
 
 int
