@@ -25,9 +25,9 @@ main ()
 	// Generate child quadrants c with child_ids i=0,...,8 and print their coordinates, level and child_id
 	for (int i = 0; i <= 8; i++) {
 		child(&q, &c, i);
+		// Expect error message in last oputput line for i=8
 		if (i == 8)
 			printf("Expect error message for child_id(c) = 8:\n");
-		// Expect error message in last oputput line for i=8
 		printf ("c.x = %i, c.y = %i, c.z = %i, level = %i, child_id(c) = %i\n", c.x, c.y, c.z,
             c.level, child_id(&c));
 	}
