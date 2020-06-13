@@ -83,6 +83,11 @@ void                root (quadrant_t * q);
 int                 sibling (const quadrant_t * q,
                              quadrant_t * sibling_quadrant, int sibling_id);
 
+/** Check whether given quadrants are siblings
+ * \param [in]  q First input quadrant
+ * \param [in]  r Second input quadrant
+ * \return true if \a q and \a r are siblings (might be equal)
+ */
 int                 is_sibling (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the ancestor of a quadrant at a given level.
@@ -118,7 +123,7 @@ int                 first_descendant (const quadrant_t * q,
  * \param [out] ld     Last descendant of \a q on level \a level.
  * \param [in]  level  Level must be greater equal than q's level.
  * \return             Returns -1 if the given quadrant \a q is not valid
- *                                or level is not in [q->level, MAXLEVEL),            
+ *                                or level is not in [q->level, MAXLEVEL),
  *                              0 if all preconditions are satisfied.
  */
 int                 last_descendant (const quadrant_t * q,
