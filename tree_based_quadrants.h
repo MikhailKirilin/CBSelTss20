@@ -49,6 +49,11 @@ int                 child_id (const quadrant_t * q);
  *                 Existing quadrant whose Morton index will be filled
  *                 with the coordinates of its child no. \b child_id.
  * \param [in]     child_id The id of the child computed, 0..d.
+ * \return         Returns -1 if the given quadrant \a q is not valid,
+ *                 level is not in [q->level, MAXLEVEL) or level of \a q
+ *                 and \a child_quadrant are not the same.
+ *                 Also if somehow the computed \a child_quadrant is not valid.            
+ *                 0 if all preconditions are satisfied.
  */
 int                 child (const quadrant_t * q, quadrant_t * child_quadrant,
                            int child_id);
@@ -118,7 +123,7 @@ int                 first_descendant (const quadrant_t * q,
  * \param [out] ld     Last descendant of \a q on level \a level.
  * \param [in]  level  Level must be greater equal than q's level.
  * \return             Returns -1 if the given quadrant \a q is not valid
- *                                or level is not in [q->level, MAXLEVEL),            
+ *                                or level is not in [q->level, MAXLEVEL),
  *                              0 if all preconditions are satisfied.
  */
 int                 last_descendant (const quadrant_t * q,
