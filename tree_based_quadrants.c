@@ -79,11 +79,21 @@ sibling (const quadrant_t * q, quadrant_t * sibling_quadrant, int sibling_id)
     return -1;
   }
 
+  if (q->level == 0 && sibling_id < 0) {
+	  printf("sibling: the root has no real siblings");
+	  return -1;
+  }
+
   sibling_quadrant->level = q->level;
   /** compute parent coordinates */
   sibling_quadrant->x = (sibling_id & 1) ? (q->x | h) : (q->x & ~h);
   sibling_quadrant->y = (sibling_id & 2) ? (q->y | h) : (q->y & ~h);
   sibling_quadrant->z = (sibling_id & 4) ? (q->z | h) : (q->z & ~h);
+
+  if (!is_valid(sibling_quadrant)) {
+	  printf("sibling: the output quadrant is not valid.\n");
+	  return -1;
+  }
 
   return 0;
 }
