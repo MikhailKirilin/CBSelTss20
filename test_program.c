@@ -7,6 +7,8 @@ main ()
     quadrant_t          children[8];
     int                 flag = 1;
 
+  //TG: root and last_descendant
+  printf ("TG: root and last_descendant\n BEGIN:\n");
     root (&q);
     printf ("q.x = %i, q.y = %i, q.z = %i, level = %i\n", q.x, q.y, q.z,
           q.level);
@@ -14,10 +16,11 @@ main ()
     /* error message will be printed by last_descendant */
     printf ("ld.x = %i, ld.y = %i, ld.z = %i, level = %i\n", ld.x, ld.y, ld.z,
             ld.level);
+    printf (" END\n\n");
   
   
-	//GM
-	printf("\nTest of the function child_id:\n");
+	//GM: child_id
+  printf ("GM: child_id\n BEGIN:\n");
 	quadrant_t	c;
 	printf("Root quadrant q: \n");
 	root (&q);
@@ -33,8 +36,11 @@ main ()
 		printf ("c.x = %i, c.y = %i, c.z = %i, level = %i, child_id(c) = %i\n", c.x, c.y, c.z,
             c.level, child_id(&c));
 	}
+  printf (" END\n\n");
+
 
     //AK
+    printf ("AK: child\n BEGIN:\n");
     root(&q);
     child(&q,&ld,7);
     child(&ld,&ch,7);
@@ -44,8 +50,11 @@ main ()
     //This should be the same quadrant, in future is_equal can be used
     printf ("ld.x = %i, ld.y = %i, ld.z = %i, ld.level = %i\n", ld.x, ld.y,
         ld.z, ld.level);
+    printf (" END\n\n");
 
-  //GC
+
+  //GC: parent
+  printf ("GC: parent\n BEGIN:\n");
   //test of child and sibling functions
   // we assign root and its first descendant at level 1
   root (&r);
@@ -74,8 +83,11 @@ main ()
     }
   if (flag)
     printf( "All good: ad expected the i-th child of the root is has the j-th chlid of the root as j-sibling for any i and j\n");
+  printf (" END\n\n");
 
-  //JV
+
+  //JV: sibling and first_descendant
+  printf ("JV: sibling and first_descendant\n BEGIN:\n");
   root (&q);
   printf ("q.x = %i, q.y = %i, q.z = %i, level = %i\n", q.x, q.y, q.z,
           q.level);
@@ -98,10 +110,13 @@ main ()
 	  printf("sp.x = %i, sp.y = %i, sp.z = %i, level = %i, \n", siblingparent.x, siblingparent.y, siblingparent.z, siblingparent.level);
   if (child(&siblingparent, &siblingchild, 3) == 0)
 	  printf("sc.x = %i, sc.y = %i, sc.z = %i, level = %i, \n", siblingchild.x, siblingchild.y, siblingchild.z, siblingchild.level);
+#if 0
   if (is_equal(s3, siblingchild))
 	  printf("this test was succesful");
   else
 	  printf("something went wrong");
+#endif
+  printf (" END\n\n");
 
   return 0;
 }
