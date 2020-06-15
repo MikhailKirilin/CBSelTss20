@@ -58,6 +58,11 @@ parent (const quadrant_t * q, quadrant_t * parent_quadrant)
   parent_quadrant->y = q->y & not_h;
   parent_quadrant->z = q->z & not_h;
 
+  if (!is_valid (parent_quadrant)) {
+    printf ("parent: the output quadrant is not valid.\n");
+    return -1;
+  }
+
   return 0;
 }
 
