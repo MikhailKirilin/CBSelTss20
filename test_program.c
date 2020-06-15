@@ -1,5 +1,35 @@
 #include "tree_based_quadrants.h"
 
+void
+test_ancestor ()
+{
+  quadrant_t          r, ld, fd, ld_anc, fd_anc;
+
+  root (&r);
+
+  last_descendant (&r, &ld, 4);
+  ancestor (&ld, 2, &ld_anc);
+
+  first_descendant (&r, &fd, 4);
+  ancestor (&fd, 2, &fd_anc);
+
+  if (is_ancestor (&r, &fd_anc) && is_ancestor (&r, &ld_anc)) {
+    printf ("The root quadrant is ancestor of ancestors of the first "
+            "and last descendants of the root\n");
+  }
+  else {
+    printf ("something went wrong!\n");
+  }
+
+  if (!is_ancestor (&ld_anc, &fd_anc) && !is_ancestor (&ld_anc, &fd_anc)) {
+    printf ("Elements on the same level are only ancestors of each other "
+            "if they are the same\n");
+  }
+  else {
+    printf ("something went wrong!\n");
+  }
+}
+
 int
 main ()
 {
@@ -27,7 +57,8 @@ main ()
   printf ("q.x = %i, q.y = %i, q.z = %i, level = %i\n", q.x, q.y, q.z,
           q.level);
   printf ("Child quadrants c with child_ids i=0,...,8:\n");
-  // Generate child quadrants c with child_ids i=0,...,8 and print their coordinates, level and child_id
+  // Generate child quadrants c with child_ids i=0,...,8 and print their
+  // coordinates, level and child_id
   for (int i = 0; i <= 8; i++) {
     child (&q, &c, i);
     // Expect error message in last oputput line for i=8
@@ -72,17 +103,16 @@ main ()
       // wh check if it is the same of the i-th child of the root
       if (children[i].x - q.x != 0
           || children[i].y - q.y != 0 || children[i].z - q.z != 0) {
-        printf
-          ("Error: the %d-th child of the root is has not the %d-th chlid of the root as %d-sibling\n",
-           i, j, j);
+        printf ("Error: the %d-th child of the root is has not the %d-th "
+                "chlid of the root as %d-sibling\n", i, j, j);
         flag = 0;
         break;
       }
 
     }
   if (flag)
-    printf
-      ("All good: ad expected the i-th child of the root is has the j-th chlid of the root as j-sibling for any i and j\n");
+    printf ("All good: ad expected the i-th child of the root "
+            "is has the j-thchlid of the root as j-sibling for any i and j\n");
   printf (" END\n\n");
 
   //JV: sibling and first_descendant
@@ -122,6 +152,11 @@ main ()
   else
     printf ("something went wrong");
 #endif
+  printf (" END\n\n");
+
+  /* LD */
+  printf ("LD: ancestor\n BEGIN:\n");
+  test_ancestor ();
   printf (" END\n\n");
 
   return 0;

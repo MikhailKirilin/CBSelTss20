@@ -19,8 +19,8 @@ child_id (const quadrant_t * q)
     // return variable
     int                 res = 0;
 
-    // Check wheter the coordinates of q are even or odd multiples of the quadrant_length 
-    // and add up the corresponding powers of 2
+    // Check wheter the coordinates of q are even or odd multiples
+    // of the quadrant_length and add up the corresponding powers of 2
     res += (q->x & h ? 1 : 0);
     res += ((q->y & h ? 1 : 0) << 1);
     res += ((q->z & h ? 1 : 0) << 2);
@@ -29,8 +29,8 @@ child_id (const quadrant_t * q)
     if (res >= 0 && res <= 7)
       return res;
     else {
-      printf
-        ("child_id: the return value does not lie between (inclusive) 0 and 7.\n");
+      printf ("child_id: the return value does not lie between \
+          (inclusive) 0 and 7.\n");
       return -1;
     }
   }
@@ -48,8 +48,9 @@ child (const quadrant_t * q, quadrant_t * child_quadrant, int child_id)
     return -1;
   }
   if (child_id < 0 || child_id > 7) {
-    printf ("child: The child_id %i is not valid \
-        (needs to be between 0 (included) and 7 (included)).\n", child_id);
+    printf ("child: The child_id %i is not valid "
+            "(needs to be between 0 (included) and 7 (included)).\n",
+            child_id);
     return -1;
   }
   if (q->level == MAXLEVEL) {
@@ -154,23 +155,33 @@ ancestor (const quadrant_t * q, int level, quadrant_t * ancestor_quadrant)
 {
   qcoord_t            mask;
 
-  if (!is_valid (q)) {
+  if (is_valid (q)) {
+    if (level <= (int) q->level || level >= 0) {
+      mask = ~(QUADRANT_LEN (level) - 1);
+
+      ancestor_quadrant->level = level;
+      ancestor_quadrant->x = q->x & mask;
+      ancestor_quadrant->y = q->y & mask;
+      ancestor_quadrant->z = q->z & mask;
+
+    }
+    else {
+      printf ("ancestor: level should be between 0 and quadrant level");
+      return -1;
+    }
+
+  }
+  else {
     printf ("ancestor: the input quadrant has to be valid.\n");
     return -1;
   }
-
-  if ((int) q->level < level || level < 0) {
-    printf ("ancestor: level should be between 0 and quadrant level");
+  if (is_valid (ancestor_quadrant)) {
+    return 0;
+  }
+  else {
+    printf ("ancestor: the output quadrant has to be valid.\n");
     return -1;
   }
-  mask = ~(QUADRANT_LEN (level) - 1);
-
-  ancestor_quadrant->level = level;
-  ancestor_quadrant->x = q->x & mask;
-  ancestor_quadrant->y = q->y & mask;
-  ancestor_quadrant->z = q->z & mask;
-
-  return 0;
 }
 
 int
@@ -178,15 +189,16 @@ is_ancestor (const quadrant_t * q, const quadrant_t * r)
 {
   qcoord_t            mask;
 
-  if (!is_valid (q) || !is_valid (r)) {
+  if (is_valid (q) && is_valid (r)) {
+    mask = ~(QUADRANT_LEN (q->level) - 1);
+    return (q->level <= r->level) && !((q->x ^ r->x) & mask)
+      && !((q->y ^ r->y) & mask)
+      && !((q->z ^ r->z) & mask);
+  }
+  else {
     printf ("is_ancestor: the input quadrants have to be valid.\n");
     return -1;
   }
-
-  mask = ~(QUADRANT_LEN (q->level) - 1);
-  return (q->level <= r->level) && !((q->x ^ r->x) & mask)
-    && !((q->y ^ r->y) & mask)
-    && !((q->z ^ r->z) & mask);
 }
 
 int
