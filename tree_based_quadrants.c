@@ -168,15 +168,15 @@ is_ancestor (const quadrant_t * q, const quadrant_t * r)
 {
   qcoord_t          mask;
 
-  if (!is_valid (q) || !is_valid (r)) {
+  if (is_valid (q) && is_valid (r)) {
+    mask = ~(QUADRANT_LEN(q->level) - 1);
+    return (q->level <= r->level) && !((q->x ^ r->x) & mask)
+                                  && !((q->y ^ r->y) & mask)
+                                  && !((q->z ^ r->z) & mask);
+  }else{
     printf ("is_ancestor: the input quadrants have to be valid.\n");
     return -1;
   }
-
-  mask = ~(QUADRANT_LEN(q->level) - 1);
-  return (q->level <= r->level) && !((q->x ^ r->x) & mask)
-                                && !((q->y ^ r->y) & mask)
-                                && !((q->z ^ r->z) & mask);
 }
 
 int
