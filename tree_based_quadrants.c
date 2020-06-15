@@ -136,23 +136,31 @@ ancestor (const quadrant_t * q, int level,quadrant_t * ancestor_quadrant)
 {
   qcoord_t        mask;
 
-  if (!is_valid (q)) {
+  if (is_valid (q)) {
+    if(level <= (int) q->level || level >= 0) {
+        mask = ~(QUADRANT_LEN(level) - 1);
+
+        ancestor_quadrant->level = level;
+        ancestor_quadrant->x = q->x & mask;
+        ancestor_quadrant->y = q->y & mask;
+        ancestor_quadrant->z = q->z & mask;
+      
+    }else{
+      printf("ancestor: level should be between 0 and quadrant level");
+      return -1;
+    }
+
+  }else{
     printf ("ancestor: the input quadrant has to be valid.\n");
     return -1;
   }
-
-  if((int) q->level < level || level < 0) {
-    printf("ancestor: level should be between 0 and quadrant level");
+  if (is_valid(ancestor_quadrant)){
+    return 0;
+  }else{
+    printf ("ancestor: the output quadrant has to be valid.\n");
     return -1;
   }
-  mask = ~(QUADRANT_LEN(level) - 1);
 
-  ancestor_quadrant->level = level;
-  ancestor_quadrant->x = q->x & mask;
-  ancestor_quadrant->y = q->y & mask;
-  ancestor_quadrant->z = q->z & mask;
-
-  return 0;
 }
 
 int
