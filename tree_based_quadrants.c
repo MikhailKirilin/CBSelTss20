@@ -29,7 +29,7 @@ child_id (const quadrant_t *q)
 		if (res >= 0 && res <= 7)
 			return res;
 		else {
-			printf ("child_id: the return value does not lie between (inclusive) 0 and 7.\n");
+			printf ("child_id: the return value does not lie between 0 (inclusive) and 7 (inclusive).\n");
 			return -1;
 		}
 	}
