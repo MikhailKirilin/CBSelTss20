@@ -40,13 +40,42 @@ main ()
 
   //TG: root and last_descendant
   printf ("TG: root and last_descendant\n BEGIN:\n");
+  /* test the root function by printing the root coordinates and level */
   root (&q);
+  printf ("The root quadrant q:\n");
   printf ("q.x = %i, q.y = %i, q.z = %i, level = %i\n", q.x, q.y, q.z,
           q.level);
-  if (last_descendant (&q, &ld, 1) == 0)
-    /* error message will be printed by last_descendant */
-    printf ("ld.x = %i, ld.y = %i, ld.z = %i, level = %i\n", ld.x, ld.y, ld.z,
-            ld.level);
+
+  /* print an example of a last descendant */
+  if (last_descendant (&q, &ld, 1) == 0) {
+      /* error message will be printed by last_descendant */
+      printf ("ld.x = %i, ld.y = %i, ld.z = %i, level = %i\n", ld.x, ld.y, ld.z,
+              ld.level);
+
+    /* check parent of the last descendant on level 1 */
+    if (parent (&ld, &r) == 0) {
+#if 0
+      if (!(is_equal (&q, &r)))
+#endif
+      if (!(r.x == 0 && r.y == 0 && r.z == 0 && r.level == 0))
+        printf ("Error: parent of the last descendant on level one of the \
+                 root should be the root.\n");
+    }
+  }
+
+  /* check the child id of a last descendant */
+  if (last_descendant (&ld, &ld, 4) == 0) {
+      printf ("ld.x = %i, ld.y = %i, ld.z = %i, level = %i\n", ld.x, ld.y, ld.z,
+              ld.level);
+    if (sibling (&ld, &r, 7) == 0) {
+#if 0
+      if (!(is_equal (&ld, &r)))
+#endif
+      if (!(r.x == ld.x && r.y == ld.y && r.z == ld.z && r.level == ld.level))
+        printf ("Error: the child id of the last descendant should be 7.\n");
+    }
+  }
+
   printf (" END\n\n");
 
   //GM: child_id
