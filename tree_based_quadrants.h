@@ -52,7 +52,7 @@ int                 child_id (const quadrant_t * q);
  * \return         Returns -1 if the given quadrant \a q is not valid,
  *                 level is not in [q->level, MAXLEVEL) or level of \a q
  *                 and \a child_quadrant are not the same.
- *                 Also if somehow the computed \a child_quadrant is not valid.            
+ *                 Also if somehow the computed \a child_quadrant is not valid.
  *                 0 if all preconditions are satisfied.
  */
 int                 child (const quadrant_t * q, quadrant_t * child_quadrant,
@@ -84,6 +84,11 @@ void                root (quadrant_t * q);
  *                    Existing quadrant whose Morton index will be filled
  *                    with the coordinates of sibling no. sibling_id of q.
  * \param [in]     sibling_id The id of the sibling computed, 0..d.
+ * \return             Returns -1 if the given quadrant \a q is not valid
+ *                                or sibling_id is not in [0, 8),           
+ *                                or level is 0 and sibling_id >0           
+ *                                or output is not valid           
+ *                              0 if all preconditions are satisfied and output quadrant is valid.
  */
 int                 sibling (const quadrant_t * q,
                              quadrant_t * sibling_quadrant, int sibling_id);
@@ -113,6 +118,9 @@ int                 is_ancestor (const quadrant_t * q, const quadrant_t * r);
  * \param [out] first_descendant
  *                     First descendant of \a q on level \a level.
  * \param [in]  level  Level must be greater equal than q's level.
+ * \return             Returns -1 if the given quadrant \a q is not valid
+ *                                or level is not in [q->level, MAXLEVEL),           
+ *                              0 if all preconditions are satisfied.
  */
 int                 first_descendant (const quadrant_t * q,
                                       quadrant_t * first_descendant,
