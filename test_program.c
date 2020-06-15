@@ -1,5 +1,29 @@
 #include "tree_based_quadrants.h"
 
+void test_ancestor(){
+    quadrant_t r, ld, fd, ld_anc, fd_anc;
+
+    root(&r);
+
+    last_descendant(&r, &ld, 4);
+    ancestor(&ld, 2, &ld_anc);
+
+    first_descendant(&r,&fd,4);
+    ancestor(&fd, 2, &fd_anc);
+
+    if(is_ancestor(&r, &fd_anc) && is_ancestor(&r , &ld_anc)){
+        printf("The root quadrant is ancestor of ancestors of the first and last descendants of the root\n");
+    }else{
+        printf("something went wrong!\n");
+    }   
+
+    if(!is_ancestor(&ld_anc,&fd_anc) && !is_ancestor(&ld_anc,&fd_anc)){
+        printf("Elements on the same level are only ancestors of each other if they are the same\n");
+    }else{
+        printf("something went wrong!\n");
+    }
+}
+
 int
 main ()
 {
@@ -43,6 +67,9 @@ main ()
     printf ("ld.x = %i, ld.y = %i, ld.z = %i, ld.level = %i\n", ld.x, ld.y,
         ld.z, ld.level);
 
+
+    /*LD*/
+    test_ancestor();
+
   return 0;
 }
-
