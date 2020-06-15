@@ -105,6 +105,7 @@ int                 ancestor (const quadrant_t * q, int level,
  * \param [in] q Quadrant to be tested.
  * \param [in] r Descendent quadrant.
  * \return true if \a q is an ancestor of \a r (might be equal).
+ *          ( -1) if there was an error
  */
 int                 is_ancestor (const quadrant_t * q, const quadrant_t * r);
 
