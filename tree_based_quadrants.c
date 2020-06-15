@@ -82,18 +82,29 @@ int child (const quadrant_t * q, quadrant_t * child_quadrant,
 int
 parent (const quadrant_t * q, quadrant_t * parent_quadrant)
 {
-  if (q->level == 0) {
-    printf ("The root has no parent quadrant");
+  if (!is_valid (q)) {
+    printf ("parent: the input quadrant is not valid.\n");
+    return -1;
+  }
+  
+  if (q->level <= 0) {
+    printf ("The root has no parent quadrant.\n");
     return -1;
   }
   // level of the parent decreases by 1
   parent_quadrant->level = q->level - 1;
-  // we compute the size
+  // we compute the size and its bitwise negation
   int                 h = QUADRANT_LEN (q->level);
+  int                 not_h = ~h;
   // compute parent coordinates
-  parent_quadrant->x = q->x & ~h;
-  parent_quadrant->y = q->y & ~h;
-  parent_quadrant->z = q->z & ~h;
+  parent_quadrant->x = q->x & not_h;
+  parent_quadrant->y = q->y & not_h;
+  parent_quadrant->z = q->z & not_h;
+
+  if (!is_valid (parent_quadrant)) {
+    printf ("parent: the output quadrant is not valid.\n");
+    return -1;
+  }
 
   return 0;
 }
