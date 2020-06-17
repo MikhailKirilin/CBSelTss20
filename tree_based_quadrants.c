@@ -19,7 +19,7 @@ child_id (const quadrant_t * q)
     // return variable
     int                 res = 0;
 
-    // Check wheter the coordinates of q are even or odd multiples
+    // Check whether the coordinates of q are even or odd multiples
     // of the quadrant_length and add up the corresponding powers of 2
     res += (q->x & h ? 1 : 0);
     res += ((q->y & h ? 1 : 0) << 1);
@@ -30,7 +30,7 @@ child_id (const quadrant_t * q)
       return res;
     else {
       printf ("child_id: the return value does not lie between \
-          (inclusive) 0 and 7.\n");
+          0 (inclusive) and 7 (inclusive).\n");
       return -1;
     }
   }
