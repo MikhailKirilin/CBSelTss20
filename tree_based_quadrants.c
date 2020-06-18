@@ -11,6 +11,20 @@ is_valid (const quadrant_t * q)
 }
 
 int
+is_equal (const quadrant_t * q, const quadrant_t * r)
+{
+  if (is_valid (q) && is_valid (r)) {
+    return (q->level == r->level) && (q->x == r->x)
+      && (q->y == r->y)
+      && (q->z == r->z);
+  }
+  else {
+    printf ("is_equal: the input quadrants have to be valid.\n");
+    return -1;
+  }
+}
+
+int
 child_id (const quadrant_t * q)
 {
   if (is_valid (q)) {

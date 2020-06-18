@@ -36,6 +36,12 @@ quadrant_t;
  */
 int                 is_valid (const quadrant_t * q);
 
+/** Test if a quadrant is equal to another quadrant.
+ * \param [in] q First quadrant to be tested.
+ * \param [in] r Second quadrant to be tested.
+ * \return true if \a q is equal to \a r.
+ *          ( -1) if there was an error
+ */
 int                 is_equal (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the position of this child within its siblings.
