@@ -63,8 +63,8 @@ is_child (const quadrant_t * q, const quadrant_t * r)
 	if(is_valid(q) && is_valid(r)) {
 		if (q->level > 0) {
 		mask = ~(QUADRANT_LEN(r->level) - 1);
-		// checks whether r is an ancestor of q and is one level below q
-		return (q->level == r->level + 1) && !((q->x ^ r->x) & mask)
+		// checks whether r is an ancestor of q and whether q has equal level as r or is one level below r
+		return (q->level == r->level || q->level == r->level + 1) && !((q->x ^ r->x) & mask)
 										  && !((q->y ^ r->y) & mask)
 										  && !((q->z ^ r->z) & mask);
 		}
