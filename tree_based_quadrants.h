@@ -39,7 +39,7 @@ int                 is_valid (const quadrant_t * q);
 int                 is_equal (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the position of this child within its siblings.
- * \return Returns its child id in 0..d
+ * \return Returns its child id in 0..d-1
  */
 int                 child_id (const quadrant_t * q);
 
@@ -48,7 +48,7 @@ int                 child_id (const quadrant_t * q);
  * \param [in,out] child_quadrant
  *                 Existing quadrant whose Morton index will be filled
  *                 with the coordinates of its child no. \b child_id.
- * \param [in]     child_id The id of the child computed, 0..d.
+ * \param [in]     child_id The id of the child computed, 0..d-1.
  */
 int                 child (const quadrant_t * q, quadrant_t * child_quadrant,
                            int child_id);
