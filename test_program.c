@@ -39,6 +39,7 @@ main ()
 	root (&q);
 	printf ("q.x = %i, q.y = %i, q.z = %i, level = %i\n", q.x, q.y, q.z,
 		  q.level);
+	printf("q is child q: %i (expect 1)\n", is_child(&q, &q));
 		  
 	// Generate child quadrant c1 of q
 	printf("Child quadrant c1 of q: \n");
