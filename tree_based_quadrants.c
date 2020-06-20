@@ -68,10 +68,9 @@ is_child (const quadrant_t * q, const quadrant_t * r)
 										  && !((q->y ^ r->y) & mask)
 										  && !((q->z ^ r->z) & mask);
 		}
-		else {
-			printf ("is_child: level of q has to be greater than 0.\n");
-			return -1;
-		}
+		// if q has level 0 so must r
+		else 
+			return (r->level == 0);
 	}
 	else {
 		printf ("is_child: input quadrants have to be valid.\n");
