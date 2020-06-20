@@ -56,7 +56,7 @@ int                 child (const quadrant_t * q, quadrant_t * child_quadrant,
  /** Test if a quadrant is a child of another quadrant.
  * \param [in] q Quadrant to be tested.
  * \param [in] r Ancestor quadrant.
- * \return true if \a q is a child of \a r (might be equal) .
+ * \return true if \a q is a child of \a r (might be equal).
  */
 int                 is_child (const quadrant_t * q, const quadrant_t * r);
 
