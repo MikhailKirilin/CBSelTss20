@@ -30,16 +30,31 @@ typedef struct quadrant
 }
 quadrant_t;
 
+/** Check if the \a return_value is -1 (error code).
+ * \param[in] return_value The return value that is checked.
+ * \param[in] stop A bool to determine if the program is aborted in case of error.
+ * \return         If the program is not aborted the function always returns
+ *                 \a return_value.
+ */
+int                 check_return_value (int return_value,
+                                        int8_t stop);
+
 /** Test if a quadrant has valid Morton indices.
  * \param [in] q Quadrant to be tested.
  * \return Returns true if \a q is valid.
  */
 int                 is_valid (const quadrant_t * q);
 
+/** Test if a quadrant is equal to another quadrant.
+ * \param [in] q First quadrant to be tested.
+ * \param [in] r Second quadrant to be tested.
+ * \return true if \a q is equal to \a r.
+ *          ( -1) if there was an error
+ */
 int                 is_equal (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the position of this child within its siblings.
- * \return Returns its child id in 0..d
+ * \return Returns its child id in 0..d-1
  */
 int                 child_id (const quadrant_t * q);
 
@@ -48,11 +63,21 @@ int                 child_id (const quadrant_t * q);
  * \param [in,out] child_quadrant
  *                 Existing quadrant whose Morton index will be filled
  *                 with the coordinates of its child no. \b child_id.
- * \param [in]     child_id The id of the child computed, 0..d.
+ * \param [in]     child_id The id of the child computed, 0..d-1.
+ * \return         Returns -1 if the given quadrant \a q is not valid,
+ *                 level is not in [q->level, MAXLEVEL) or level of \a q
+ *                 and \a child_quadrant are not the same.
+ *                 Also if somehow the computed \a child_quadrant is not valid.
+ *                 0 if all preconditions are satisfied.
  */
 int                 child (const quadrant_t * q, quadrant_t * child_quadrant,
                            int child_id);
 
+ /** Test if a quadrant is a child of another quadrant.
+ * \param [in] q Quadrant to be tested.
+ * \param [in] r Ancestor quadrant.
+ * \return true if \a q is a child of \a r (might be equal).
+ */
 int                 is_child (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the parent of a quadrant.
@@ -84,10 +109,20 @@ void                root (quadrant_t * q);
  *                    Existing quadrant whose Morton index will be filled
  *                    with the coordinates of sibling no. sibling_id of q.
  * \param [in]     sibling_id The id of the sibling computed, 0..d.
+ * \return             Returns -1 if the given quadrant \a q is not valid
+ *                                or sibling_id is not in [0, 8),           
+ *                                or level is 0 and sibling_id >0           
+ *                                or output is not valid           
+ *                              0 if all preconditions are satisfied and output quadrant is valid.
  */
 int                 sibling (const quadrant_t * q,
                              quadrant_t * sibling_quadrant, int sibling_id);
 
+/** Check whether given quadrants are siblings
+ * \param [in]  q First input quadrant
+ * \param [in]  r Second input quadrant
+ * \return true if \a q and \a r are siblings (might be equal)
+ */
 int                 is_sibling (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the ancestor of a quadrant at a given level.
@@ -105,6 +140,7 @@ int                 ancestor (const quadrant_t * q, int level,
  * \param [in] q Quadrant to be tested.
  * \param [in] r Descendent quadrant.
  * \return true if \a q is an ancestor of \a r (might be equal).
+ *          ( -1) if there was an error
  */
 int                 is_ancestor (const quadrant_t * q, const quadrant_t * r);
 
@@ -113,6 +149,9 @@ int                 is_ancestor (const quadrant_t * q, const quadrant_t * r);
  * \param [out] first_descendant
  *                     First descendant of \a q on level \a level.
  * \param [in]  level  Level must be greater equal than q's level.
+ * \return             Returns -1 if the given quadrant \a q is not valid
+ *                                or level is not in [q->level, MAXLEVEL),           
+ *                              0 if all preconditions are satisfied.
  */
 int                 first_descendant (const quadrant_t * q,
                                       quadrant_t * first_descendant,
@@ -123,7 +162,7 @@ int                 first_descendant (const quadrant_t * q,
  * \param [out] ld     Last descendant of \a q on level \a level.
  * \param [in]  level  Level must be greater equal than q's level.
  * \return             Returns -1 if the given quadrant \a q is not valid
- *                                or level is not in [q->level, MAXLEVEL),            
+ *                                or level is not in [q->level, MAXLEVEL),
  *                              0 if all preconditions are satisfied.
  */
 int                 last_descendant (const quadrant_t * q,
