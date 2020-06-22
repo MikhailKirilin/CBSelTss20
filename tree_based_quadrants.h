@@ -30,6 +30,15 @@ typedef struct quadrant
 }
 quadrant_t;
 
+/** Check if the \a return_value is -1 (error code).
+ * \param[in] return_value The return value that is checked.
+ * \param[in] stop A bool to determine if the program is aborted in case of error.
+ * \return         If the program is not aborted the function always returns
+ *                 \a return_value.
+ */
+int                 check_return_value (int return_value,
+                                        int8_t stop);
+
 /** Test if a quadrant has valid Morton indices.
  * \param [in] q Quadrant to be tested.
  * \return Returns true if \a q is valid.

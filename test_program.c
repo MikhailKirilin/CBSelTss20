@@ -7,11 +7,11 @@ test_ancestor ()
 
   root (&r);
 
-  last_descendant (&r, &ld, 4);
-  ancestor (&ld, 2, &ld_anc);
+  check_return_value (last_descendant (&r, &ld, 4), 0);
+  check_return_value (ancestor (&ld, 2, &ld_anc), 0);
 
-  first_descendant (&r, &fd, 4);
-  ancestor (&fd, 2, &fd_anc);
+  check_return_value (first_descendant (&r, &fd, 4), 0);
+  check_return_value (ancestor (&fd, 2, &fd_anc), 0);
 
   if (is_ancestor (&r, &fd_anc) && is_ancestor (&r, &ld_anc)) {
     printf ("The root quadrant is ancestor of ancestors of the first "
@@ -49,7 +49,7 @@ main ()
   // Generate child quadrants c with child_ids i=0,...,8 and print their
   // coordinates, level and child_id
   for (int i = 0; i <= 8; i++) {
-    child (&q, &c, i);
+    check_return_value (child (&q, &c, i), 0);
     // Expect error message in last oputput line for i=8
     if (i == 8)
       printf ("Expect error message for child_id(c) = 8:\n");
@@ -61,8 +61,8 @@ main ()
   //AK
   printf ("AK: child\n BEGIN:\n");
   root (&q);
-  child (&q, &ld, 7);
-  child (&ld, &ch, 7);
+  check_return_value (child (&q, &ld, 7), 0);
+  check_return_value (child (&ld, &ch, 7), 0);
   printf ("ch.x = %i, ch.y = %i, ch.z = %i, ch.level = %i \n", ch.x, ch.y,
           ch.z, ch.level);
   last_descendant (&q, &ld, 2);
@@ -78,7 +78,7 @@ main ()
   root (&r);
   // we assign the children
   for (int i = 0; i < 8; i++) {
-    child (&r, &children[i], i);
+    check_return_value (child (&r, &children[i], i), 0);
   }
   // we check that all the children of the root are siblings
   for (int i = 0; i < 8; i++)
@@ -86,7 +86,7 @@ main ()
       if (i == j)
         continue;
       // we compute the j-th sibling of the i-th child 
-      sibling (&children[i], &sib, j);
+      check_return_value (sibling (&children[i], &sib, j), 0);
       // we compute the i-th sibling of the the j-th sibling of th i-th child
       sibling (&sib, &q, i);
       // wh check if it is the same of the i-th child of the root
@@ -126,14 +126,14 @@ main ()
 		  
 	// Generate child quadrant c1 of q
 	printf("Child quadrant c1 of q: \n");
-	child(&q, &c1, 1);
+	check_return_value (child(&q, &c1, 1), 0);
 	printf ("c1.x = %i, c1.y = %i, c1.z = %i, level = %i, child_id(c1) = %i\n", c1.x, c1.y, c1.z,
 		  c1.level, child_id(&c1));
 	printf("c1 is child of q: %i (expect 1)\n", is_child(&c1, &q));
 	
 	// Generate child quadrants c2 of c1
 	printf("Child quadrant c2 of c1: \n");
-	child(&c1, &c2, 2);
+	check_return_value (child(&c1, &c2, 2), 0);
 	printf ("c2.x = %i, c2.y = %i, c2.z = %i, level = %i, child_id(c2) = %i\n", c2.x, c2.y, c2.z,
 		  c2.level, child_id(&c2));
 		  

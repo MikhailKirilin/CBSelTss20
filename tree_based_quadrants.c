@@ -1,5 +1,13 @@
 #include "tree_based_quadrants.h"
 
+int check_return_value (int return_value, int8_t stop)
+{
+  if (return_value == -1) {
+    stop ? abort(): printf ("Warning: A function returned the error value -1 but the programm was not aborted.\n");
+  }
+  return return_value;
+}
+
 int
 is_valid (const quadrant_t * q)
 {
