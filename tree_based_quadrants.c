@@ -3,7 +3,12 @@
 int check_return_value (int return_value, int8_t stop)
 {
   if (return_value == -1) {
-    stop ? abort(): printf ("Warning: A function returned the error value -1 but the programm was not aborted.\n");
+    if (stop)
+      abort();
+    else {
+      printf ("Warning: A function returned the error value -1 but the programm was not aborted.\n");
+      return 0;
+    }
   }
   return return_value;
 }
