@@ -3,15 +3,22 @@
 int
 main ()
 {
-  quadrant_t          q, ld;
-
-  root (&q);
-  printf ("q.x = %i, q.y = %i, q.z = %i, level = %i\n", q.x, q.y, q.z,
-          q.level);
-  if (last_descendant (&q, &ld, 1) == 0)
-    /* error message will be printed by last_descendant */
-    printf ("ld.x = %i, ld.y = %i, ld.z = %i, level = %i\n", ld.x, ld.y, ld.z,
-            ld.level);
-
+  quadrant_t          	par,fd, q, r;
+  int 					lvl = rand() % MAXLEVEL;
+  int 					i = rand() % 8;
+  // assign the root
+  root (&r);
+  // compute first descendant of the root at random level
+  first_descendant (&r, &fd, lvl);
+  // compute a random sibling
+  sibling (&fd, &q, i);
+  // compute the parent
+  parent (&q, &par);
+  if (!is_parent(&par, &q))
+  	printf   ("is_parent: something is wrong!\n");
+  else 
+  	printf 	("the parent of (%i, %i, %i) at level %i is (%i, %i, %i) at level %i\n",
+  			q.x, q.y, q.z, q.level, 
+        	par.x, par.y, par.z, par.level );
   return 0;
 }
