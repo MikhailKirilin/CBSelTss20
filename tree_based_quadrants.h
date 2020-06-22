@@ -45,7 +45,7 @@ int                 is_valid (const quadrant_t * q);
 int                 is_equal (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the position of this child within its siblings.
- * \return Returns its child id in 0..d
+ * \return Returns its child id in 0..d-1
  */
 int                 child_id (const quadrant_t * q);
 
@@ -54,7 +54,7 @@ int                 child_id (const quadrant_t * q);
  * \param [in,out] child_quadrant
  *                 Existing quadrant whose Morton index will be filled
  *                 with the coordinates of its child no. \b child_id.
- * \param [in]     child_id The id of the child computed, 0..d.
+ * \param [in]     child_id The id of the child computed, 0..d-1.
  * \return         Returns -1 if the given quadrant \a q is not valid,
  *                 level is not in [q->level, MAXLEVEL) or level of \a q
  *                 and \a child_quadrant are not the same.
@@ -64,6 +64,11 @@ int                 child_id (const quadrant_t * q);
 int                 child (const quadrant_t * q, quadrant_t * child_quadrant,
                            int child_id);
 
+ /** Test if a quadrant is a child of another quadrant.
+ * \param [in] q Quadrant to be tested.
+ * \param [in] r Ancestor quadrant.
+ * \return true if \a q is a child of \a r (might be equal).
+ */
 int                 is_child (const quadrant_t * q, const quadrant_t * r);
 
 /** Compute the parent of a quadrant.

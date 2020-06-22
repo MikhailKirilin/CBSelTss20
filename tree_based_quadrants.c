@@ -91,6 +91,32 @@ child (const quadrant_t * q, quadrant_t * child_quadrant, int child_id)
   return 0;
 }
 
+// Checks whether q is a child of r
+int                 
+is_child (const quadrant_t * q, const quadrant_t * r)
+{
+	qcoord_t        mask;
+	
+	if(is_valid(q) && is_valid(r)) {
+		if (q->level > 0) {
+		mask = ~(QUADRANT_LEN(r->level) - 1);
+		// checks whether r is an ancestor of q and whether q has equal level as r or is one level below r
+		return (q->level == r->level || q->level == r->level + 1) && !((q->x ^ r->x) & mask)
+										  && !((q->y ^ r->y) & mask)
+										  && !((q->z ^ r->z) & mask);
+		}
+		// if q has level 0 so must r
+		else 
+			return (r->level == 0);
+	}
+	else {
+		printf ("is_child: input quadrants have to be valid.\n");
+		return -1;
+	}
+}
+
+
+
 int
 parent (const quadrant_t * q, quadrant_t * parent_quadrant)
 {
