@@ -164,6 +164,27 @@ sibling (const quadrant_t * q, quadrant_t * sibling_quadrant, int sibling_id)
   return 0;
 }
 
+int is_sibling (const quadrant_t * q, const quadrant_t * r)
+{
+  if(!is_valid(q) || !is_valid(r) )
+  {
+    printf("is_sibling: the input quadrants have to be valid. \n" );
+    return -1;
+  }
+   //checking for level guarantees that nothing weird happens with mask
+  if(!(q->level == r->level))
+  {
+    //printf("is_sibling: the input quadrants have to have the same level.\n" );
+    return 0;
+  }
+
+  qcoord_t mask = ~QUADRANT_LEN(q->level);
+
+  return !((q->x ^ r->x) & mask) && !((q->y ^ r->y) & mask)
+                                && !((q->z ^ r->z) & mask);
+
+}
+
 int
 ancestor (const quadrant_t * q, int level, quadrant_t * ancestor_quadrant)
 {

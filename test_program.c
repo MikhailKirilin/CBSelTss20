@@ -135,12 +135,10 @@ main ()
   if (child (&siblingparent, &siblingchild, 3) == 0)
     printf ("sc.x = %i, sc.y = %i, sc.z = %i, level = %i, \n", siblingchild.x,
             siblingchild.y, siblingchild.z, siblingchild.level);
-#if 0
-  if (is_equal (s3, siblingchild))
+  if (is_equal (&s3, &siblingchild))
     printf ("this test was succesful");
   else
     printf ("something went wrong");
-#endif
   printf (" END\n\n");
 
   /* LD */

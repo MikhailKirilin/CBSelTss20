@@ -16,10 +16,7 @@ main ()
 
     /* check parent of the last descendant on level 1 */
     if (parent (&ld, &r) == 0) {
-#if 0
-      if (!(is_equal (&q, &r)))
-#endif
-        if (!(r.x == 0 && r.y == 0 && r.z == 0 && r.level == 0))
+        if (!(is_equal (&q, &r)))
           printf ("Error: parent of the last descendant on level one of the \
                  root should be the root.\n");
     }
@@ -30,12 +27,7 @@ main ()
     printf ("ld.x = %i, ld.y = %i, ld.z = %i, level = %i\n", ld.x, ld.y, ld.z,
             ld.level);
     if (sibling (&ld, &r, 7) == 0) {
-#if 0
       if (!(is_equal (&ld, &r)))
-#endif
-        if (!
-            (r.x == ld.x && r.y == ld.y && r.z == ld.z
-             && r.level == ld.level))
           printf
             ("Error: the child id of the last descendant should be 7.\n");
     }
