@@ -37,12 +37,12 @@ main ()
 	printf ("c2.x = %i, c2.y = %i, c2.z = %i, level = %i, child_id(c2) = %i\n", c2.x, c2.y, c2.z,
 		  c2.level, child_id(&c2));
 		  
-	// Expect 1
-	printf("c2 is child of q: %i (expect 0)\n", is_child(&c2, &q));
 	// Expect 0
+	printf("c2 is child of q: %i (expect 0)\n", is_child(&c2, &q));
+	// Expect 1
 	printf("c2 is child of c1: %i (expect 1)\n", is_child(&c2, &c1));
 	// Expect -1
-	printf("c2 is child of q: %i (expect -1)\n", is_child(&q, &c1));
+	printf("q is child of c1: %i (expect -1)\n", is_child(&q, &c1));
 
 	return 0;
 }
