@@ -67,7 +67,8 @@ int                 parent (const quadrant_t * q,
 
 /** Test if a quadrant is the parent of another quadrant.
  * \param [in]  q Quadrant to be tested.
- * \param [in]  r Child quadrant
+ * \param [in]  r Child quadrant.
+ * \return true if \a q is the parent of \a r.
  */
 int                 is_parent (const quadrant_t * q, const quadrant_t * r);
 

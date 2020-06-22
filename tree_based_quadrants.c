@@ -63,22 +63,22 @@ is_parent (const quadrant_t * q, const quadrant_t * r)
     return -1;
   }
 
+  //some shortcuts
   if (q->level >= MAXLEVEL) {
     printf("is_parent: level of first input has to be less then MAXLEVEL.\n");
-    return -1;
+    return 0;
   }
-
   if (r->level == 0) {
     printf("is_parent: level of second input has to be more than zero.\n");
-    return -1;
+    return 0;
   }
-  
+  // size computation
   qcoord_t mask = ~ QUADRANT_LEN (r->level);
-
-  return ( q->level < r->level 
-        && !((r->x & mask) ^ q->x ) 
-        && !((r->y & mask) ^ q->y ) 
-        && !((r->z & mask) ^ q->z ) );
+  // compute coordinates of parent of r and check if they are equal to coordinates of q
+  return ( q->level == r->level - 1
+        && (r->x & mask) == q->x
+        && (r->y & mask) == q->y
+        && (r->z & mask) == q->z );
 }
 
 void
