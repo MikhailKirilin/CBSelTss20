@@ -30,6 +30,15 @@ typedef struct quadrant
 }
 quadrant_t;
 
+typedef struct quadrantlin
+{
+  qcoord_t            I;
+                     /**< linear permutation of coordinates */
+  int8_t              level;
+                    /**< level of refinement */
+}
+quadrant_lin;
+
 /** Check if the \a return_value is -1 (error code).
  * \param[in] return_value The return value that is checked.
  * \param[in] stop A bool to determine if the program is aborted in case of error.
@@ -91,6 +100,20 @@ int                 parent (const quadrant_t * q,
                             quadrant_t * parent_quadrant);
 
 int                 is_parent (const quadrant_t * q, const quadrant_t * r);
+
+/** Compute the linear permutation from the coordiates of a quadrant.
+ * \param [in]  q Input quadrant.
+ * \param [in,out] p same quadrant with linear index representing the coordinates.
+ * \note tha it is the inverse of linear_id_inv.
+ */
+int                 linear_id (const quadrant_t * q, quadrant_lin * p);
+
+/** Compute the coordiates of a quadrant from their linear permutation.
+ * \param [in]  q Input quadrant with linear index representing te coordinates.
+ * \param [in,out] p same quadrant with usual coordinates.
+ * \note tha it is the inverse of linear_id.
+ */
+int                 linear_id_inv (const quadrant_lin * p, quadrant_t * q);
 
 /** Write in the quadrant \a q the coordinates of the root quadrants.
  * \param [out]  q      Quadrant that coordinates will be set to coordinates
