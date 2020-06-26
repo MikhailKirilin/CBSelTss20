@@ -51,10 +51,10 @@ main ()
   }
   printf("level 1 ancestor of grandchild");
   if(is_equal(&a, &c)){
-    printf(" equal to child of root\n");
+    printf(" is equal to child of root\n");
   }
   else{
-    printf(" unequal to child of root ERROR\n");
+    printf(" is unequal to child of root ERROR\n");
   }
   printf("test level 1 ancestor as strict ancestor of grandchild\n");
   if (is_strict_ancestor(&r,&gc)) {
