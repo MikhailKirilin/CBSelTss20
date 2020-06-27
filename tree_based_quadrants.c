@@ -100,11 +100,11 @@ child (const quadrant_t * q, quadrant_t * child_quadrant, int child_id)
 }
 
 // Checks whether q is a child of r
-int                 
+int
 is_child (const quadrant_t * q, const quadrant_t * r)
 {
 	qcoord_t        mask;
-	
+
 	if(is_valid(q) && is_valid(r)) {
 		if (q->level > 0) {
 		mask = ~(QUADRANT_LEN(r->level) - 1);
@@ -114,7 +114,7 @@ is_child (const quadrant_t * q, const quadrant_t * r)
 										  && !((q->z ^ r->z) & mask);
 		}
 		// if q has level 0 so must r
-		else 
+		else
 			return (r->level == 0);
 	}
 	else {
@@ -323,4 +323,87 @@ last_descendant (const quadrant_t * q, quadrant_t * last_descendant,
   last_descendant->level = (int8_t) level;
 
   return 0;
+}
+
+
+int successor(const quadrant_t * q, quadrant_t * s, int check)
+{
+	if (!is_valid(q))
+	{
+		printf("successor: the input quadrants have to be valid. \n");
+		return -1;
+	}
+	//what if q is last descendant of root -> would cause immens problems
+	//trick with check, otherwise this would be very costly
+	if(check)
+	{
+		quadrant_t r,cq;
+		root(&r);
+		last_descendant(&r,&cq,q->level);
+		if (is_equal(&q,&cq))
+		{
+			printf("successor: the input quadrant does not have a successor.\n" );
+			return -1;
+		}
+	}
+
+	//as a if-else clause - should be less computation?
+	int cid = child_id(&q);
+	if (cid == 7)
+	{
+		quadrant_t i, h;
+
+		parent(&q,&i);
+		//now we do no longer need to check
+		successor(&i,&h,0);
+		first_descendant(&h,&s,q->level);
+
+	}
+	else
+	{
+		sibling(&q,&s,cid+1);
+	}
+
+	return 0;
+}
+
+int predecessor(const quadrant_t * q, quadrant_t * p, int check)
+{
+	if (!is_valid(q))
+	{
+		printf("predecessor: the input quadrants have to be valid. \n");
+		return -1;
+	}
+	//what if q is first descendant of root -> would cause immens problems
+	//trick with check, otherwise this would be very costly
+	if(check)
+	{
+		quadrant_t r,cq;
+		root(&r);
+		first_descendant(&r,&cq,q->level);
+		if (is_equal(&q,&cq))
+		{
+			printf("predecessor: the input quadrant does not have a predecessor.\n" );
+			return -1;
+		}
+	}
+
+	//as a if-else clause - should be less computation?
+	int cid = child_id(&q);
+	if (cid == 0)
+	{
+		quadrant_t i, h;
+
+		parent(&q,&i);
+		//now we no longer need to check
+		predecessor(&i,&h,0);
+		last_descendant(&h,&p,q->level);
+
+	}
+	else
+	{
+		sibling(&q,&p,cid-1);
+	}
+
+	return 0;
 }

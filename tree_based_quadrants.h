@@ -105,9 +105,9 @@ void                root (quadrant_t * q);
  *                    with the coordinates of sibling no. sibling_id of q.
  * \param [in]     sibling_id The id of the sibling computed, 0..d.
  * \return             Returns -1 if the given quadrant \a q is not valid
- *                                or sibling_id is not in [0, 8),           
- *                                or level is 0 and sibling_id >0           
- *                                or output is not valid           
+ *                                or sibling_id is not in [0, 8),
+ *                                or level is 0 and sibling_id >0
+ *                                or output is not valid
  *                              0 if all preconditions are satisfied and output quadrant is valid.
  */
 int                 sibling (const quadrant_t * q,
@@ -145,7 +145,7 @@ int                 is_ancestor (const quadrant_t * q, const quadrant_t * r);
  *                     First descendant of \a q on level \a level.
  * \param [in]  level  Level must be greater equal than q's level.
  * \return             Returns -1 if the given quadrant \a q is not valid
- *                                or level is not in [q->level, MAXLEVEL),           
+ *                                or level is not in [q->level, MAXLEVEL),
  *                              0 if all preconditions are satisfied.
  */
 int                 first_descendant (const quadrant_t * q,
@@ -162,5 +162,26 @@ int                 first_descendant (const quadrant_t * q,
  */
 int                 last_descendant (const quadrant_t * q,
                                      quadrant_t * ld, int level);
+
+
+/** Compute the successor of a quadrant.
+ * \param [in]  q     Input quadrant.
+ * \param [out] s     Successor of \a q.
+ * \param [in]  check Boolian value whether checking if \a q has a successor is
+ *                        necessary (in recursion generally not).
+ * \return            Returns -1 if \a q is not valid or does not have a sucessor
+ *                             0 if all preconditions are satisfied.
+ */
+int successor(const quadrant_t * q, quadrant_t * s, int check);
+
+/** Compute the successor of a quadrant.
+ * \param [in]  q     Input quadrant.
+ * \param [out] p     Successor of \a q.
+ * \param [in]  check Boolian value whether checking if \a q has a predecessor
+ *                        is necessary (in recursion generally not).
+ * \return            Returns -1 if \a q is not valid or does not have a predecessor
+ *                             0 if all preconditions are satisfied.
+ */
+int predecessor(const quadrant_t * q, quadrant_t * p, int check);
 
 #endif /* !TREE_BASED_QUADRANTS_H */
