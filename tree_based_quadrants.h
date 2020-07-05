@@ -33,6 +33,7 @@ typedef struct quadrant
 }
 quadrant_t;
 
+/** The linear represented 3D quadrant datatype */
 typedef struct quadrantlin
 {
   qcoord_I            I;
@@ -104,7 +105,7 @@ int                 parent (const quadrant_t * q,
 
 int                 is_parent (const quadrant_t * q, const quadrant_t * r);
 
-/** Compute the linear permutation from the coordiates of a quadrant.
+/** Compute the linear permutation from the coordinates of a quadrant.
  * \param [in]  q Input quadrant.
  * \param [in,out] p same quadrant with linear index representing the coordinates.
  * \note tha it is the inverse of linear_id_inv.
