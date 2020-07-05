@@ -20,6 +20,9 @@
 /** Typedef for quadrant coordinates. */
 typedef int32_t     qcoord_t;
 
+/** Typedef linear permutation of quadrant coordinates.**/
+typedef int64_t     qcoord_I;
+
 /** The 3D quadrant (octant) datatype */
 typedef struct quadrant
 {
@@ -32,7 +35,7 @@ quadrant_t;
 
 typedef struct quadrantlin
 {
-  qcoord_t            I;
+  qcoord_I            I;
                      /**< linear permutation of coordinates */
   int8_t              level;
                     /**< level of refinement */

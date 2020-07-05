@@ -184,6 +184,7 @@ linear_id (const quadrant_t * q, quadrant_lin * p)
 int
 linear_id_inv (const quadrant_lin * p, quadrant_t * q)
 {
+  // need validy check on p.I??
   q->level = p->level;
   q->x = q->y = q->z = 0;
   // compute coordinates
