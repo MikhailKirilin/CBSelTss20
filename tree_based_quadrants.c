@@ -184,7 +184,28 @@ linear_id (const quadrant_t * q, quadrant_lin * p)
 int
 linear_id_inv (const quadrant_lin * p, quadrant_t * q)
 {
-  // need validy check on p.I??
+  // validy checks on p
+  // we check the level
+  if (p->level < 0 || p->level > MAXLEVEL) {
+    printf ("linear_id_inv: the input quadrantlin is not valid.\
+                            Its level has to lie between 0 included and MAXLEVEL included \n");
+    return -1;
+  }
+
+  // compute upper_bound for I
+  int64_t
+  upper_bound;
+
+  upper_bound = (int64_t) 1 << ( 3 * MAXLEVEL ) - 1;
+
+  // we check I
+  if (p->I < 0 || p->I > upper_bound) {
+    printf ("linear_id_inv: the input quadrantlin is not valid.\
+                            Its linear permutation of coordinates is too big.\
+                            It has to lie between 0 included and 2^(3*MAXLEVEL)-1 included \n");
+    return -1;
+  }
+
   q->level = p->level;
   q->x = q->y = q->z = 0;
   // compute coordinates
