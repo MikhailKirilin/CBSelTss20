@@ -191,6 +191,70 @@ is_parent (const quadrant_t * q, const quadrant_t * r)
         && (r->z & mask) == q->z );
 }
 
+int
+linear_id (const quadrant_t * q, quadrant_lin * p)
+{
+  // validity check on input quadrant
+  if (!is_valid (q)) {
+    printf ("linear_id: the input quadrant is not valid.\n");
+    return -1;
+  }
+
+  p->level = q->level;
+  p->I = 0;
+  // compute linear index
+  for (int i = 1; i <= q->level; i++) {
+    p->I += (int64_t)( ( q->x >> (MAXLEVEL - i) ) & 1) <<   3*(MAXLEVEL - i);
+    p->I += (int64_t)( ( q->y >> (MAXLEVEL - i) ) & 1) << ( 3*(MAXLEVEL - i) + 1 );
+    p->I += (int64_t)( ( q->z >> (MAXLEVEL - i) ) & 1) << ( 3*(MAXLEVEL - i) + 2 );
+  }
+
+  return 0;
+}
+
+int
+linear_id_inv (const quadrant_lin * p, quadrant_t * q)
+{
+  // validy checks on p
+  // we check the level
+  if (p->level < 0 || p->level > MAXLEVEL) {
+    printf ("linear_id_inv: the input quadrantlin is not valid.\
+                            Its level has to lie between 0 included and MAXLEVEL included \n");
+    return -1;
+  }
+
+  // compute upper_bound for I
+  int64_t
+  upper_bound;
+
+  upper_bound = (int64_t) 1 << ( 3 * MAXLEVEL ) - 1;
+
+  // we check I
+  if (p->I < 0 || p->I > upper_bound) {
+    printf ("linear_id_inv: the input quadrantlin is not valid.\
+                            Its linear permutation of coordinates is too big.\
+                            It has to lie between 0 included and 2^(3*MAXLEVEL)-1 included \n");
+    return -1;
+  }
+
+  q->level = p->level;
+  q->x = q->y = q->z = 0;
+  // compute coordinates
+  for (int i = 1; i <= p->level; i++) {
+    q->x += (int32_t)( ( p->I >> 3*(MAXLEVEL - i) )     & 1) << (MAXLEVEL - i);
+    q->y += (int32_t)( ( p->I >> 3*(MAXLEVEL - i) + 1 ) & 1) << (MAXLEVEL - i);
+    q->z += (int32_t)( ( p->I >> 3*(MAXLEVEL - i) + 2 ) & 1) << (MAXLEVEL - i);
+  }
+  // validity check on output quadrant
+  if (!is_valid (q)) {
+    printf ("linear_id_inv: the output quadrant is not valid.\
+                            the input must produce a valid output quadrant. \n");
+    return -1;
+  }
+
+  return 0;
+}
+
 void
 root (quadrant_t * q)
 {
