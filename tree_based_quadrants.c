@@ -326,6 +326,11 @@ int					smallest_ancestor(const quadrant_t * p, const quadrant_t * q,
 	int lin_compare;
 	quadrant_lin p_lin, q_lin, smallest_ancestor_lin;
 	
+	if(!is_valid(q) || !is_valid(p)) {
+		printf("smallest_ancestor: input quadrant are not valid.\n");
+		return -1;
+	}
+	
 	// compute level_max
 	if (p->level <= q->level)
 		level_max = q->level;
@@ -337,16 +342,16 @@ int					smallest_ancestor(const quadrant_t * p, const quadrant_t * q,
 	linear_id(q, &q_lin);
 	
 	// compare linear indices of p and q
-	lin_compare = p_lin.I & q_lin.I;
+	lin_compare = (p_lin.I ^ q_lin.I);
 	
 	for (int i = 0; i < level_max; i++) {
-		int mask = 3 * QUADRANT_LEN(MAXLEVEL - i);
-		if (mask >> lin_compare == 0)
-			lin_index << mask;
-		else {
-			lin_index = mask >> p_lin.I;
+		int mask = 3 * QUADRANT_LEN(MAXLEVEL - 1 - i);
+		if ((mask >> lin_compare) == 0) {
+			lin_index = (mask >> p_lin.I);
 			level_count++;
 		}
+		else
+			lin_index << 3 * QUADRANT_LEN(MAXLEVEL - i);
 	}
 	smallest_ancestor_lin.level = level_count;
 	smallest_ancestor_lin.I = lin_index;

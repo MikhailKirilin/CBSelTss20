@@ -7,7 +7,7 @@ EX_DIR = examples
 TARGET =  test_program
 
 #add the name of your test program below
-EXAMPLE = test_root test_last_descendant test_is_equal test_is_sibling test_linear_id
+EXAMPLE = test_root test_last_descendant test_is_equal test_is_sibling test_linear_id test_smallest_ancestor
 
 EXAMPLE_DIR = $(addprefix $(EX_DIR)/,$(EXAMPLE))
 DEP_OBJ = tree_based_quadrants.o
