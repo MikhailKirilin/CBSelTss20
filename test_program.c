@@ -161,8 +161,8 @@ main ()
 	printf("c2 is child of q: %i (expect 0)\n", is_child(&c2, &q));
 	// Expect 1
 	printf("c2 is child of c1: %i (expect 1)\n", is_child(&c2, &c1));
-	// Expect -1
-	printf("q is child of c1: %i (expect -1)\n", is_child(&q, &c1));
+	// Expect 0
+	printf("q is child of c1: %i (expect 0)\n", is_child(&q, &c1));
 
   printf (" END: is_child test\n\n");
 

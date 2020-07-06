@@ -118,10 +118,13 @@ is_child (const quadrant_t * q, const quadrant_t * r)
 										  && !((q->y ^ r->y) & mask)
 										  && !((q->z ^ r->z) & mask);
 		}
-		// if q has level 0 so must r
+
 		else {
+#if 0
 			printf ("is_child: first input quadrant is the root quadrant.\n");
-			return -1;
+#endif
+      /* the root can not be a child */
+			return 0;
 		}
 	}
 	else {
