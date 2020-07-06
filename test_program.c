@@ -33,8 +33,8 @@ test_ancestor ()
 int
 main ()
 {
-  quadrant_t          q, ld, ch, r, sib, fd, s1, s2, s3, siblingparent,
-    siblingchild;
+  quadrant_t          q, ld, ch, r, sib, fd, s1, s2, s3, par, siblingparent,
+                      siblingchild;
   quadrant_t          children[8];
   int                 flag = 1;
 
@@ -102,6 +102,26 @@ main ()
   if (flag)
     printf ("All good: ad expected the i-th child of the root "
             "is has the j-thchlid of the root as j-sibling for any i and j\n");
+  printf (" END\n\n");
+
+  //GC is_parent
+  printf ("GC: is_parent\n BEGIN:\n");
+  int           lvl = rand() % MAXLEVEL;
+  int           i = rand() % 8;
+  // assign the root
+  root (&r);
+  // compute first descendant of the root at random level
+  first_descendant (&r, &fd, lvl);
+  // compute a random sibling
+  sibling (&fd, &q, i);
+  // compute the parent
+  parent (&q, &par);
+  if (!is_parent(&par, &q))
+    printf   ("is_parent: something is wrong!\n");
+  else 
+    printf  ("the parent of (%i, %i, %i) at level %i is (%i, %i, %i) at level %i\n",
+        q.x, q.y, q.z, q.level, 
+          par.x, par.y, par.z, par.level );
   printf (" END\n\n");
 
   //JV: sibling and first_descendant

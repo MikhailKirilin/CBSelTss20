@@ -160,6 +160,32 @@ parent (const quadrant_t * q, quadrant_t * parent_quadrant)
   return 0;
 }
 
+int
+is_parent (const quadrant_t * q, const quadrant_t * r)
+{
+  if (!is_valid (q) || !is_valid (r)) {
+    printf ("is_parent: the input quadrants have to be valid.\n");
+    return -1;
+  }
+
+  //some shortcuts
+  if (q->level >= MAXLEVEL) {
+    printf("is_parent: level of first input has to be less then MAXLEVEL.\n");
+    return 0;
+  }
+  if (r->level == 0) {
+    printf("is_parent: level of second input has to be more than zero.\n");
+    return 0;
+  }
+  // size computation
+  qcoord_t mask = ~ QUADRANT_LEN (r->level);
+  // compute coordinates of parent of r and check if they are equal to coordinates of q
+  return ( q->level == r->level - 1
+        && (r->x & mask) == q->x
+        && (r->y & mask) == q->y
+        && (r->z & mask) == q->z );
+}
+
 void
 root (quadrant_t * q)
 {
