@@ -166,6 +166,17 @@ int                 ancestor (const quadrant_t * q, int level,
  */
 int                 is_ancestor (const quadrant_t * q, const quadrant_t * r);
 
+/** Compute the smallest ancestor of two quadrants.
+ * \param [in]  p      Input quadrant.
+ * \param [in]  q      Input quadrant.
+ * \param [out] smallest_ancestor
+ * \return             Returns -1 if there was an error,           
+ *                              0 if all preconditions are satisfied.
+ *                     
+ */
+int					smallest_ancestor(const quadrant_t * p, const quadrant_t * q, 
+									quadrant_t * smallest_ancestor);
+
 /** Compute the first descendant of a quadrant on a given level.
  * \param [in]  q      Input quadrant.
  * \param [out] first_descendant
@@ -175,6 +186,7 @@ int                 is_ancestor (const quadrant_t * q, const quadrant_t * r);
  *                                or level is not in [q->level, MAXLEVEL),           
  *                              0 if all preconditions are satisfied.
  */
+
 int                 first_descendant (const quadrant_t * q,
                                       quadrant_t * first_descendant,
                                       int level);

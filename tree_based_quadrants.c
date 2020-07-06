@@ -318,6 +318,44 @@ is_ancestor (const quadrant_t * q, const quadrant_t * r)
   }
 }
 
+int					smallest_ancestor(const quadrant_t * p, const quadrant_t * q, 
+									quadrant_t * smallest_ancestor) {
+	int level_max;
+	int level_count = 0;
+	int lin_index = 0;
+	int lin_compare;
+	quadrant_lin p_lin, q_lin, smallest_ancestor_lin;
+	
+	// compute level_max
+	if (p->level <= q->level)
+		level_max = q->level;
+	else
+		level_max = p->level;
+	
+	// linear_ids of p and q
+	linear_id(p, &p_lin);
+	linear_id(q, &q_lin);
+	
+	// compare linear indices of p and q
+	lin_compare = p_lin.I & q_lin.I;
+	
+	for (int i = 0; i < level_max; i++) {
+		int mask = 3 * QUADRANT_LEN(MAXLEVEL - i);
+		if (mask >> lin_compare == 0)
+			lin_index << mask;
+		else {
+			lin_index = mask >> p_lin.I;
+			level_count++;
+		}
+	}
+	smallest_ancestor_lin.level = level_count;
+	smallest_ancestor_lin.I = lin_index;
+	linear_id_inv(&smallest_ancestor_lin, smallest_ancestor); 
+	
+	return 0;									
+}
+
+
 int
 first_descendant (const quadrant_t * q, quadrant_t * first_descendant,
                   int level)
