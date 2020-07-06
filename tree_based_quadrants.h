@@ -167,21 +167,30 @@ int                 last_descendant (const quadrant_t * q,
 /** Compute the successor of a quadrant.
  * \param [in]  q     Input quadrant.
  * \param [out] s     Successor of \a q.
- * \param [in]  check Boolian value whether checking if \a q has a successor is
- *                        necessary (in recursion generally not).
  * \return            Returns -1 if \a q is not valid or does not have a sucessor
  *                             0 if all preconditions are satisfied.
  */
-int successor(const quadrant_t * q, quadrant_t * s, int check);
+int successor(const quadrant_t * q, quadrant_t * s);
+
+/** Compute the successor of a quadrant (the recursion without checks).
+ * \param [in]  q     Input quadrant.
+ * \param [out] s     Successor of \a q.
+ * \return            0 if all preconditions are satisfied.
+ */
+int successor_rec(const quadrant_t * q, quadrant_t * s);
 
 /** Compute the successor of a quadrant.
  * \param [in]  q     Input quadrant.
  * \param [out] p     Successor of \a q.
- * \param [in]  check Boolian value whether checking if \a q has a predecessor
- *                        is necessary (in recursion generally not).
  * \return            Returns -1 if \a q is not valid or does not have a predecessor
  *                             0 if all preconditions are satisfied.
  */
-int predecessor(const quadrant_t * q, quadrant_t * p, int check);
+int predecessor(const quadrant_t * q, quadrant_t * p);
 
+/** Compute the successor of a quadrant.
+ * \param [in]  q     Input quadrant.
+ * \param [out] p     Successor of \a q.
+ * \return            0 if all preconditions are satisfied.
+ */
+int predecessor_rec(const quadrant_t * q, quadrant_t * p);
 #endif /* !TREE_BASED_QUADRANTS_H */
