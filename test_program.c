@@ -33,9 +33,10 @@ test_ancestor ()
 int
 main ()
 {
-  quadrant_t          q, ld, ch, r, sib, fd, s1, s2, s3, siblingparent,
+  quadrant_t          q, ld, ch, r, sib, fd, s1, s2, s3, test, siblingparent,
     siblingchild;
   quadrant_t          children[8];
+  quadrant_lin        L;
   int                 flag = 1;
 
   //GM: child_id
@@ -103,6 +104,28 @@ main ()
     printf ("All good: ad expected the i-th child of the root "
             "is has the j-thchlid of the root as j-sibling for any i and j\n");
   printf (" END\n\n");
+
+
+  
+  //GC: linear_id and linear_id_inv
+  printf ("GC: linear_id\n BEGIN:\n");
+  root(&r);
+  printf("the root (%i, %i, %i) \n", r.x, r.y, r.z);
+
+  child(&r, &q, 2);
+  printf("has child (%i, %i, %i)\n", q.x, q.y, q.z);
+
+  linear_id(&q, &L);
+  printf("with linear index %li \n", L.I);
+
+  linear_id_inv(&L, &test);
+  printf("whose inverse is (%i, %i, %i) \n", test.x, test.y, test.z);
+
+  if (is_equal(&test, &q) > 0) printf("so it's all good\n");
+
+  else printf("error: linear_index_inv not inverse of linear_id\n");
+  return 0;
+  printf("END\n\n");
 
   //JV: sibling and first_descendant
   printf ("JV: sibling and first_descendant\n BEGIN:\n");

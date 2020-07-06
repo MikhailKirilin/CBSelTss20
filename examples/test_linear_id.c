@@ -6,14 +6,13 @@ main ()
 	quadrant_t q, r, test;
 	quadrant_lin L;
 	root(&r);
-	printf("the root is (%i, %i, %i) \n", r.x, r.y, r.z);
+	printf("the root (%i, %i, %i) \n", r.x, r.y, r.z);
 
 	child(&r, &q, 2);
-	printf("the child (%i, %i, %i)\n", q.x, q.y, q.z);
+	printf("has child (%i, %i, %i)\n", q.x, q.y, q.z);
 
 	linear_id(&q, &L);
-	printf("has linear index %i \n", L.I);
-
+	printf("with linear index %li \n", L.I);
 	linear_id_inv(&L, &test);
 	printf("whose inverse is (%i, %i, %i) \n", test.x, test.y, test.z);
 

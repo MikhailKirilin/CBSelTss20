@@ -173,9 +173,9 @@ linear_id (const quadrant_t * q, quadrant_lin * p)
   p->I = 0;
   // compute linear index
   for (int i = 1; i <= q->level; i++) {
-    p->I += ( ( q->x >> (MAXLEVEL - i) ) & 1) <<   3*(MAXLEVEL - i);
-    p->I += ( ( q->y >> (MAXLEVEL - i) ) & 1) << ( 3*(MAXLEVEL - i) + 1 );
-    p->I += ( ( q->z >> (MAXLEVEL - i) ) & 1) << ( 3*(MAXLEVEL - i) + 2 );
+    p->I += (int64_t)( ( q->x >> (MAXLEVEL - i) ) & 1) <<   3*(MAXLEVEL - i);
+    p->I += (int64_t)( ( q->y >> (MAXLEVEL - i) ) & 1) << ( 3*(MAXLEVEL - i) + 1 );
+    p->I += (int64_t)( ( q->z >> (MAXLEVEL - i) ) & 1) << ( 3*(MAXLEVEL - i) + 2 );
   }
 
   return 0;
@@ -189,9 +189,9 @@ linear_id_inv (const quadrant_lin * p, quadrant_t * q)
   q->x = q->y = q->z = 0;
   // compute coordinates
   for (int i = 1; i <= p->level; i++) {
-    q->x += ( ( p->I >> 3*(MAXLEVEL - i) )     & 1) << (MAXLEVEL - i);
-    q->y += ( ( p->I >> 3*(MAXLEVEL - i) + 1 ) & 1) << (MAXLEVEL - i);
-    q->z += ( ( p->I >> 3*(MAXLEVEL - i) + 2 ) & 1) << (MAXLEVEL - i);
+    q->x += (int32_t)( ( p->I >> 3*(MAXLEVEL - i) )     & 1) << (MAXLEVEL - i);
+    q->y += (int32_t)( ( p->I >> 3*(MAXLEVEL - i) + 1 ) & 1) << (MAXLEVEL - i);
+    q->z += (int32_t)( ( p->I >> 3*(MAXLEVEL - i) + 2 ) & 1) << (MAXLEVEL - i);
   }
   // validity check on output quadrant
   if (!is_valid (q)) {
